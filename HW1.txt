@@ -1,4 +1,4 @@
-Amelia Beckham SQL HW 1
+Amelia Beckham SQL HW 1 9/15/13
 
 1)"c001";"Tiptop"         ;"Duluth";10.00
   "c002";"Basics"         ;"Dallas";12.00
