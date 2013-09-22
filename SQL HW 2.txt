@@ -1,0 +1,65 @@
+Amelia Beckham SQL HW 2
+
+1) select city 
+     from customers
+     where cid= 'c002'
+
+2) select pid
+   from orders
+   where cid in
+         ( select cid
+           from customers
+           where city = 'Kyoto');
+
+3) select cid, 
+          name 
+   from customers
+   where cid not in
+         ( select cid
+           from orders
+           where aid ='a03');
+
+4) select cid
+   from orders
+   where pid='p01';
+
+5) select cid
+          name
+   from customers
+   where cid in
+         ( select cid 
+           from orders 
+           where pid ='p07' and cid in 
+                                ( select cid 
+                                  from orders 
+                                  where pid= 'p07'));
+      
+
+6) select pid
+   from orders
+   where cid in
+         ( select cid
+           from orders
+           where aid='a03');
+
+7) select name
+          discount
+   from customers
+   where cid in
+         ( select cid
+           from orders
+           where aid in
+                 ( select aid 
+                   from agents
+                   where city= 'Dallas' or city='Duluth');
+
+8) select name
+          cid
+   from customers
+   where discount in
+         ( select discount
+           from customers
+           where city='Dallas' or city='Kyoto');
+
+
+
