@@ -1,0 +1,103 @@
+Amelia Beckham                  10/1/13
+DBMGMT                          HW
+
+1)select city 
+	from agents 
+	where aid in
+	(select aid 
+	from orders
+	where cid='c002')
+
+2) select distinct agents.aid,agents.city 
+   	from agents inner join orders
+   	on agents.aid = orders.aid
+   	where orders.cid = 'c002'
+
+3) select distnct pid
+	from orders
+	where cid in (select cid
+	from customers
+	where city = 'Kyoto')
+
+4) select distinct orders.pid 
+   	from orders inner join customers
+   	on orders.cid = customers.cid
+   	where customers.city = 'Kyoto'
+
+5)select distinct name
+from customers
+where cid not in
+(select distinct cid
+from orders)
+            
+
+6) select customers.name 
+from customers left join orders
+on orders.cid= customers.cid
+where orders.cid is null
+
+7) select distinct customers.name, agents.name
+from (customers inner join agents
+on customers.city = agents.city)
+inner join orders
+on ((agents.aid = orders.aid)
+and (customers.cid = orders.cid))
+
+8) select distinct customers.name, agents.name, agents.city
+   from customers inner join agents
+   on customers.city = agents.city
+
+9)select customers.name, customers.city
+from 
+(select city, count(pid) as pidcount from products group by city) as t
+inner join customers on t.city=customers.city
+where pidcount in (select min(pidcount)
+ from (select city, count(pid) as pidcount from products group by city) as s)
+
+10)select customers.name, customers.city
+from 
+(select city, count(pid) as pidcount from products group by city) as t
+inner join customers on t.city=customers.city
+where pidcount in (select max(pidcount)
+ from (select city, count(pid) as pidcount from products group by city) as s)
+
+11)select customers.name, customers.city
+from 
+(select city, count(pid) as pidcount from products group by city) as t
+inner join customers on t.city=customers.city
+where pidcount in (select max(pidcount)
+ from (select city, count(pid) as pidcount from products group by city) as s)
+
+12)select name
+from products
+where priceUSD > (select avg(priceUSD) from products)
+
+13)select distinct customers.name,pid,dollars
+from orders inner join customers
+on orders.cid = customers.cid
+order by dollars
+
+14)select name, sum(dollars)
+from orders inner join customers
+on orders.cid = customers.cid
+group by name
+order by sum(dollars)
+
+15)select distinct customers.name,products.name,agents.name,agents.city
+from ((orders inner join agents
+on orders.aid = agents.aid)
+inner join customers
+on (customers.cid = orders.cid)
+inner join products
+on (orders.pid = products.pid))
+where agents.city = 'New York'
+
+16)select ordno, dollars, ((100-customers.discount)/100)*orders.qty*products.priceUSD,
+dollars - ((100-customers.discount)/100)*orders.qty*products.priceUSD
+from (orders inner join products
+on orders.pid=products.pid)
+inner join customers
+on customers.cid=orders.cid
+
+17)insert into orders (ordno, cid, aid, pid, qty, dollars)
+values ('1027','c002','a05','p03','800','800.00')
